@@ -1,27 +1,15 @@
 {
   "functions": {
-    "api/*.js": {
+    "api/brat.js": {
       "maxDuration": 10,
-      "memory": 1024
+      "memory": 1024,
+      "runtime": "nodejs18.x"
     }
   },
-  "headers": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET,OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
-        }
-      ]
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ]
 }
