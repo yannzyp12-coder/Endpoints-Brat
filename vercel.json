@@ -1,4 +1,5 @@
 {
+  "name": "manzzxd-api-brat",
   "functions": {
     "api/brat.js": {
       "maxDuration": 10,
@@ -10,6 +11,35 @@
     {
       "src": "api/**/*.js",
       "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/brat",
+      "dest": "/api/brat.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/brat.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
     }
   ]
 }
