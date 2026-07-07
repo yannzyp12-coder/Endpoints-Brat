@@ -1,0 +1,17 @@
+[build]
+  command = "npm install"
+  functions = "api"
+  publish = "."
+
+[functions]
+  node_bundler = "esbuild"
+  
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/brat"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/api/brat"
+  status = 302
