@@ -1,20 +1,25 @@
-const express = require('express');
 const { renderBratText } = require('../lib/renderer');
 
-const app = express();
+module.exports = async (req, res) => {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
-app.get('/api/brat', async (req, res) => {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
     const { text } = req.query;
     
     if (!text || text.trim() === '') {
       return res.status(400).json({
-        error: 'Parameter "text" wajib diisi dan tidak boleh kosong',
+        error: 'Parameter "text" wajib diisi',
         example: '/api/brat?text=Halo%20Dunia'
       });
     }
@@ -24,39 +29,14 @@ app.get('/api/brat', async (req, res) => {
     
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.setHeader('Content-Length', imageBuffer.length);
-    res.send(imageBuffer);
+    res.status(200).send(imageBuffer);
     
   } catch (error) {
-    console.error('Error rendering BRAT:', error);
+    console.error('Error:', error);
     res.status(500).json({
-      error: 'Terjadi kesalahan saat memproses request',
-      message: error.message
+      error: 'Gagal generate sticker',
+      message: error.message,
+      hint: 'Pastikan text tidak mengandung karakter aneh'
     });
   }
-});
-
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0'
-  });
-});
-
-app.use((req, res) => {
-  res.status(404).json({
-    error: 'Endpoint tidak ditemukan',
-    available: ['GET /api/brat?text={text}', 'GET /api/health']
-  });
-});
-
-app.use((err, req, res, next) => {
-  console.error('Global error:', err);
-  res.status(500).json({
-    error: 'Internal server error',
-    message: err.message
-  });
-});
-
-module.exports = app;
+};
