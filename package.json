@@ -1,26 +1,12 @@
 {
   "name": "brat-api",
   "version": "1.0.0",
-  "description": "REST API untuk generate sticker BRAT dengan background transparan",
+  "description": "REST API untuk generate sticker BRAT",
   "main": "api/brat.js",
   "scripts": {
-    "start": "node api/brat.js",
-    "dev": "nodemon api/brat.js"
+    "start": "node api/brat.js"
   },
-  "keywords": [
-    "brat",
-    "sticker",
-    "whatsapp",
-    "telegram",
-    "discord",
-    "vercel"
-  ],
-  "author": "ManzzSx",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@napi-rs/canvas": "^0.1.50"
   }
 }
