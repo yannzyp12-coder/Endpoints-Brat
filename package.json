@@ -4,9 +4,12 @@
   "description": "REST API untuk generate sticker BRAT",
   "main": "api/brat.js",
   "scripts": {
-    "start": "node api/brat.js"
+    "start": "node api/brat.js",
+    "build": "echo 'Build complete'"
   },
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.50"
+    "@napi-rs/canvas": "^0.1.50",
+    "express": "^4.18.2",
+    "serverless-http": "^3.2.0"
   }
 }
